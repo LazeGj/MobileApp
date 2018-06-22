@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private Button topRated;
 
     private Button lattest;
-    private Button upcamming;
+    private Button upcoming;
 
 
     @Override
@@ -49,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         popular = (Button) findViewById(R.id.popular);
+        topRated=(Button)findViewById(R.id.top_rated);
+        lattest=(Button)findViewById(R.id.lattest);
+        upcoming=(Button)findViewById(R.id.upcoming);
 
 
         popular.setOnClickListener(new OnClickListener() {
@@ -61,11 +64,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String textEntered = "popular";
-                Context context = MainActivity.this;
-                Class destinationActivity = ChildActivity.class;
-                Intent startChildActivityIntent = new Intent(context, destinationActivity);
-                startChildActivityIntent.putExtra(Intent.EXTRA_TEXT, textEntered);
-                startActivity(startChildActivityIntent);
+               createActivity(textEntered);
+            }
+        });
+
+        topRated.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String par="top_rated";
+                createActivity(par);
+            }
+        });
+        lattest.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String par="latest";
+                createActivity(par);
+            }
+        });
+        upcoming.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String par="upcoming";
+                createActivity(par);
             }
         });
 
@@ -73,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
     void createActivity(String parametar)
     {
-        String textEntered = "popular";
+        String textEntered = parametar;
         Context context = MainActivity.this;
         Class destinationActivity = ChildActivity.class;
         Intent startChildActivityIntent = new Intent(context, destinationActivity);

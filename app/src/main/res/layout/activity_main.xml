@@ -50,11 +50,11 @@
         android:text="See the top rated movies" />
 
     <Button
-        android:id="@+id/upcamming"
+        android:id="@+id/upcoming"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginRight="70dp"
         android:layout_marginTop="60dp"
-        android:text="See the upcamming movies" />
+        android:text="See the upcoming movies" />
 </LinearLayout>
