@@ -25,7 +25,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.android.explicitintent.NetworkHandling.JsonMovie;
@@ -46,22 +48,31 @@ public class ChildActivity extends AppCompatActivity implements MovieAdapter.Mov
 
 
     private static String typeSearched;
-    Bitmap image;
-    private List<Movie> movieList;
 
+    private List<Movie> movieList;
+    ProgressBar progressBar;
     RecyclerView recyclerView;
     MovieAdapter movieAdapter;
-
+    TextView textViewError;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child);
 
+        progressBar=(ProgressBar)findViewById(R.id.progress_barr);
+
         recyclerView=(RecyclerView)findViewById(R.id.rv_movies);
+
+        textViewError=findViewById(R.id.errorMessage);
+
         movieAdapter=new MovieAdapter(this);
+
         recyclerView.setAdapter(movieAdapter);
+
         recyclerView.setHasFixedSize(true);
+
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
+
         recyclerView.setLayoutManager(layoutManager);
 
         Intent intentThatStartedThisActivity = getIntent();
@@ -99,6 +110,11 @@ public class ChildActivity extends AppCompatActivity implements MovieAdapter.Mov
     class FetchDataFromApi extends AsyncTask<String,Void,List<Movie>>
     {
 
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+        }
 
         @Override
         protected List<Movie> doInBackground(String... strings) {
@@ -132,7 +148,19 @@ public class ChildActivity extends AppCompatActivity implements MovieAdapter.Mov
 
         @Override
         protected void onPostExecute(List<Movie> movies) {
+            progressBar.setVisibility(View.INVISIBLE);
             super.onPostExecute(movies);
+            if(movies==null)
+            {
+                recyclerView.setVisibility(View.INVISIBLE);
+                textViewError.setVisibility(View.VISIBLE);
+
+            }
+            else
+            {
+                recyclerView.setVisibility(View.VISIBLE);
+                textViewError.setVisibility(View.INVISIBLE);
+            }
             movieAdapter.setMovies(movies);
         }
 

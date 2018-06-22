@@ -35,6 +35,17 @@ public class NetworkHandling {
 
         return new URL(uriBuilder.toString());
     }
+    public static URL builtURLForYouTube(String MovieId) throws MalformedURLException {
+
+        Uri uriBuilder=Uri.parse(BASE_URL).buildUpon()
+                .appendPath(MOVIE_PARAM)
+                .appendPath(MovieId)
+                .appendPath("videos")
+                .appendQueryParameter(API_PARAM,ApiKey)
+                .build();
+
+        return new URL(uriBuilder.toString());
+    }
 
     public static String getResponseFromHttpUrl(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

@@ -36,18 +36,22 @@ import com.example.android.explicitintent.NetworkHandling.NetworkHandling;
 import org.json.JSONException;
 
 public class MainActivity extends AppCompatActivity {
-    private EditText mNameEntry;
-    private Button mDoSomethingButton;
+
+    private Button popular;
+    private Button topRated;
+
+    private Button lattest;
+    private Button upcamming;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mDoSomethingButton = (Button) findViewById(R.id.b_do_something);
-        mNameEntry = (EditText) findViewById(R.id.et_text_entry);
+        popular = (Button) findViewById(R.id.popular);
 
-        mDoSomethingButton.setOnClickListener(new OnClickListener() {
+
+        popular.setOnClickListener(new OnClickListener() {
 
             /**
              * The onClick method is triggered when this button (mDoSomethingCoolButton) is clicked.
@@ -64,8 +68,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(startChildActivityIntent);
             }
         });
+
     }
 
-
+    void createActivity(String parametar)
+    {
+        String textEntered = "popular";
+        Context context = MainActivity.this;
+        Class destinationActivity = ChildActivity.class;
+        Intent startChildActivityIntent = new Intent(context, destinationActivity);
+        startChildActivityIntent.putExtra(Intent.EXTRA_TEXT, textEntered);
+        startActivity(startChildActivityIntent);
+    }
 }
 
