@@ -17,6 +17,7 @@ package com.example.android.explicitintent;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,9 +25,20 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+
+import com.example.android.explicitintent.NetworkHandling.JsonMovie;
+import com.example.android.explicitintent.NetworkHandling.NetworkHandling;
+
+import org.json.JSONException;
+
 public class MainActivity extends AppCompatActivity {
     private EditText mNameEntry;
     private Button mDoSomethingButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
              */
             @Override
             public void onClick(View v) {
-                String textEntered = mNameEntry.getText().toString();
+                String textEntered = "popular";
                 Context context = MainActivity.this;
                 Class destinationActivity = ChildActivity.class;
                 Intent startChildActivityIntent = new Intent(context, destinationActivity);
@@ -53,5 +65,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }
 
