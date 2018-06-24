@@ -14,7 +14,7 @@
   limitations under the License.
 -->
 <resources>
-    <string name="app_name">Explicit Intent</string>
+    <string name="app_name">MoviesFinder</string>
     <string name="title_activity_show_movie">ShowMovie</string>
     <string name="err_message">Error loading results, please try again</string>
     <string name="movies_show">Movies Show</string>
