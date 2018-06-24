@@ -43,10 +43,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         Movie m=movieList.get(position);
-        holder.ReleseDate.setText(m.getReleaseDate());
+        String releseDate="Release date:\n"+m.getReleaseDate();
+        String rating="Rating: "+m.getRating();
+
+        holder.ReleseDate.setText(releseDate);
         holder.textTitle.setText(m.getName());
-        holder.textRating.setText(m.getRating());
-       // holder.ImageView.setImageDrawable(m.image.getDrawable());
+        holder.textRating.setText(rating);
+        holder.imageView.setImageDrawable(m.image);
     }
 
     @Override
@@ -56,6 +59,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         return 0;
     }
 
+    public void notifyDataChange()
+    {
+        notifyDataSetChanged();
+    }
     public void setMovies(List<Movie> movies)
     {
        movieList=movies;
@@ -64,20 +71,21 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public final TextView textTitle;
-        public final TextView textRating;
-        public final TextView ReleseDate;
-        //public final ImageView ImageView;
-        public MovieViewHolder(View itemView) {
-            super(itemView);
-            textRating=(TextView)itemView.findViewById(R.id.tv_rating);
-            textTitle=(TextView)itemView.findViewById(R.id.text_view_title);
-            ReleseDate=(TextView)itemView.findViewById(R.id.relese_date);
-            //ImageView=(ImageView)itemView.findViewById(R.id.image);
-            itemView.setOnClickListener(this);
+            public final TextView textTitle;
+            public final TextView textRating;
+            public final TextView ReleseDate;
+            public final ImageView imageView;
+            //public final ImageView ImageView;
+            public MovieViewHolder(View itemView) {
+                super(itemView);
+                textRating=(TextView)itemView.findViewById(R.id.tv_rating);
+                textTitle=(TextView)itemView.findViewById(R.id.text_view_title);
+                ReleseDate=(TextView)itemView.findViewById(R.id.relese_date);
+                imageView=(ImageView)itemView.findViewById(R.id.image);
+                itemView.setOnClickListener(this);
 
 
-        }
+            }
 
         @Override
         public void onClick(View view) {

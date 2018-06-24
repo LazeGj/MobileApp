@@ -13,27 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.explicitintent;
+package com.example.android.explicitintent.Activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
-
-import com.example.android.explicitintent.NetworkHandling.JsonMovie;
-import com.example.android.explicitintent.NetworkHandling.NetworkHandling;
-
-import org.json.JSONException;
+import com.example.android.explicitintent.R;
 
 public class MainActivity extends AppCompatActivity {
 

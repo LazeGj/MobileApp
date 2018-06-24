@@ -13,31 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.explicitintent;
+package com.example.android.explicitintent.Activities;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
+import android.webkit.DownloadListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.android.explicitintent.Movie;
+import com.example.android.explicitintent.MovieAdapter;
 import com.example.android.explicitintent.NetworkHandling.JsonMovie;
 import com.example.android.explicitintent.NetworkHandling.NetworkHandling;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.squareup.picasso.Picasso;
+import com.example.android.explicitintent.R;
 
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -48,8 +50,8 @@ public class ChildActivity extends AppCompatActivity implements MovieAdapter.Mov
 
 
     private static String typeSearched;
-
-    private List<Movie> movieList;
+    private static String BUNDLE_KEY_MOVIES="MOVIES";
+    private ArrayList<Movie> movieList;
     ProgressBar progressBar;
     RecyclerView recyclerView;
     MovieAdapter movieAdapter;
@@ -81,12 +83,34 @@ public class ChildActivity extends AppCompatActivity implements MovieAdapter.Mov
 
         }
 
-    loadData();
+
+        loadData();
+
+       /* if(savedInstanceState!=null && movieList==null)
+            loadDataFromBundle(savedInstanceState);*/
+
+
     }
 
+    /*boolean loadDataFromBundle(Bundle savedInstance)
+    {
+        if(savedInstance.containsKey(BUNDLE_KEY_MOVIES))
+        {
+            movieList= (ArrayList<Movie>) savedInstance.get(BUNDLE_KEY_MOVIES);
+            movieAdapter.setMovies(movieList);
+            return true;
+        }
+        return false;
+    }*/
     void loadData()
     {
         new FetchDataFromApi().execute(typeSearched);
+    }
+
+    void loadImages(ArrayList<Movie> movies)
+    {
+
+        new Download().execute(movies);
     }
 
     @Override
@@ -107,7 +131,7 @@ public class ChildActivity extends AppCompatActivity implements MovieAdapter.Mov
 
 
 
-    class FetchDataFromApi extends AsyncTask<String,Void,List<Movie>>
+    class FetchDataFromApi extends AsyncTask<String,Void,ArrayList<Movie>>
     {
 
         @Override
@@ -117,7 +141,7 @@ public class ChildActivity extends AppCompatActivity implements MovieAdapter.Mov
         }
 
         @Override
-        protected List<Movie> doInBackground(String... strings) {
+        protected ArrayList<Movie> doInBackground(String... strings) {
             String type=strings[0];
             URL url=null;
             try {
@@ -132,7 +156,7 @@ public class ChildActivity extends AppCompatActivity implements MovieAdapter.Mov
                 e.printStackTrace();
             }
 
-            List<Movie> list=null;
+            ArrayList<Movie> list=null;
             try {
                 list= JsonMovie.getListMoviesFromJson(JSONrespnse);
             } catch (JSONException e) {
@@ -143,11 +167,13 @@ public class ChildActivity extends AppCompatActivity implements MovieAdapter.Mov
             }
         }
 
+
         //To Do send the list to the adapter
 
 
+
         @Override
-        protected void onPostExecute(List<Movie> movies) {
+        protected void onPostExecute(ArrayList<Movie> movies) {
             progressBar.setVisibility(View.INVISIBLE);
             super.onPostExecute(movies);
             if(movies==null)
@@ -158,46 +184,62 @@ public class ChildActivity extends AppCompatActivity implements MovieAdapter.Mov
             }
             else
             {
+
                 recyclerView.setVisibility(View.VISIBLE);
                 textViewError.setVisibility(View.INVISIBLE);
             }
-            movieAdapter.setMovies(movies);
+            movieList=movies;
+            movieAdapter.setMovies(movieList);
+            if(movieList!=null)
+                loadImages(movieList);
+        }
         }
 
+   /* @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        ArrayList<Movie> movieArrayList=movieList;
+        outState.putSerializable(BUNDLE_KEY_MOVIES,movieArrayList);
+    }*/
 
 
-
-
-
-        }
-    }
-
-   /* class DonwnloadImagge extends AsyncTask<String,Void,Bitmap>
+    class Download extends AsyncTask<ArrayList<Movie>,Void,Void>
     {
 
         @Override
-        protected Bitmap doInBackground(String... strings) {
-            String path=strings[0];
-            URL url= null;
-            try {
-                url = new URL(path);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            Bitmap toBeReturn=null;
-            try {
-                toBeReturn= BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            } catch (IOException e) {
-                e.printStackTrace();
+        protected Void doInBackground(ArrayList<Movie>[] arrayLists) {
+            ArrayList<Movie> movieArrayList=arrayLists[0];
+            //ArrayList<BitmapDrawable> moviesImages;
+            for(int i=0;i<movieArrayList.size();++i) {
+                Movie currentMovie=movieArrayList.get(i);
+                URL url = null;
+                try {
+                    url = new URL(currentMovie.getImageUrl());
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                Bitmap toBeReturn = null;
+                InputStream in = null;
+                try {
+                    in = url.openStream();
+                    toBeReturn = BitmapFactory.decodeStream(in);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                BitmapDrawable d=new BitmapDrawable(getResources(),toBeReturn);
+                currentMovie.image=d;
+
             }
 
-            return toBeReturn;
+
+            return null;
         }
+
 
         @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            image=null;
-            image=bitmap;
-            super.onPostExecute(bitmap);
+        protected void onPostExecute(Void aVoid) {
+            movieAdapter.notifyDataChange();
+            super.onPostExecute(aVoid);
         }
-    }*/
+    }
+}

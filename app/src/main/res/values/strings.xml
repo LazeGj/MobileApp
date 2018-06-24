@@ -18,4 +18,8 @@
     <string name="title_activity_show_movie">ShowMovie</string>
     <string name="err_message">Error loading results, please try again</string>
     <string name="movies_show">Movies Show</string>
+    <string name="ratingString">Rating:</string>
+    <string name="releseDateString">Relese date:</string>
+    <string name="watch_trailer">Watch Trailer</string>
+
 </resources>

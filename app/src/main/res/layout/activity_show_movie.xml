@@ -1,55 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout android:layout_width="match_parent"
+<RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
 
     xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:layout_width="180dp"
+        android:layout_height="205dp"
+        android:id="@+id/image_movie"
+        android:layout_below="@id/title"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/title"
         android:textColor="@color/title"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:layout_alignParentTop="true"
+
         android:textStyle="bold"
-        android:layout_gravity="top"/>/>
+        android:layout_gravity="top"/>
 
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+
 
         <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/overview"
-            android:layout_marginVertical="220dp"
-        android:layout_below="@id/title"
-        android:textSize="20dp"
-        android:layout_gravity="bottom"
+        android:layout_below="@id/image_movie"
+        android:textSize="15sp"
+        
+       android:layout_centerHorizontal="true"
+
         />
 
     <TextView
-        android:layout_marginVertical="80dp"
-        android:layout_marginRight="5dp"
-        android:layout_width="match_parent"
+
+        android:singleLine="false"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="50dp"
+        android:textSize="20sp"
+        android:textColor="@color/year"
+        android:layout_alignParentEnd="true"
         android:id="@+id/rating"
-        android:layout_gravity="right"/>
+        android:layout_gravity="right"
+        android:layout_below="@id/title"/>
 
     <TextView
-        android:layout_marginVertical="80dp"
-        android:layout_marginRight="80dp"
-        android:layout_width="match_parent"
+
+        android:singleLine="false"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="50dp"
+        android:textSize="20sp"
+        android:textColor="@color/year"
+        android:layout_alignParentEnd="true"
         android:id="@+id/relese_date"
-        android:layout_gravity="left"/>
+        android:layout_gravity="right"
+        android:layout_below="@id/rating"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Watch Trailer"
-        android:textSize="15dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:text="@string/watch_trailer"
+        android:textSize="15sp"
         android:id="@+id/watch_trailer"/>
 
 
-</FrameLayout>
+
+
+</RelativeLayout>
 
