@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button lattest;
     private Button upcoming;
+    DatabaseHelper mDatabaseHelper;
 
 
     @Override
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         topRated=(Button)findViewById(R.id.top_rated);
         lattest=(Button)findViewById(R.id.lattest);
         upcoming=(Button)findViewById(R.id.upcoming);
+        mDatabaseHelper = new DatabaseHelper(this);
 
 
         popular.setOnClickListener(new OnClickListener() {
@@ -78,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         lattest.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                String par="latest";
+                String par="now_playing";
                 createActivity(par);
             }
         });
@@ -100,6 +103,19 @@ public class MainActivity extends AppCompatActivity {
         Intent startChildActivityIntent = new Intent(context, destinationActivity);
         startChildActivityIntent.putExtra(Intent.EXTRA_TEXT, textEntered);
         startActivity(startChildActivityIntent);
+    }
+
+    public void AddData(String newEntry){
+        boolean insertData = mDatabaseHelper.addData(newEntry);
+        if(insertData){
+            toastMessage("Data Successfully inserted!");
+        }
+        else{
+            toastMessage("Something went wrong");
+        }
+    }
+    public void toastMessage(String message){
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 }
 

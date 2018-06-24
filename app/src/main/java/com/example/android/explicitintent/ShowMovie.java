@@ -82,7 +82,7 @@ public class ShowMovie extends AppCompatActivity {
         super.onStart();
         tittle.setText(movie.getName());
         desc.setText("Short Description \n"+movie.getDescription());
-        releseDay.setText("Relese date:"+movie.getReleaseDate());
+        releseDay.setText("");
         rating.setText("Rating :"+movie.getRating());
     }
 
