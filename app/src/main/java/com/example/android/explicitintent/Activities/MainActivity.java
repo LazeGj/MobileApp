@@ -13,28 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.explicitintent;
+package com.example.android.explicitintent.Activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
-
-import com.example.android.explicitintent.NetworkHandling.JsonMovie;
-import com.example.android.explicitintent.NetworkHandling.NetworkHandling;
-
-import org.json.JSONException;
+import com.example.android.explicitintent.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Button lattest;
     private Button upcoming;
-    DatabaseHelper mDatabaseHelper;
 
 
     @Override
@@ -54,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         topRated=(Button)findViewById(R.id.top_rated);
         lattest=(Button)findViewById(R.id.lattest);
         upcoming=(Button)findViewById(R.id.upcoming);
-        mDatabaseHelper = new DatabaseHelper(this);
 
 
         popular.setOnClickListener(new OnClickListener() {
@@ -81,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         lattest.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                String par="now_playing";
+                String par="latest";
                 createActivity(par);
             }
         });
@@ -103,19 +90,6 @@ public class MainActivity extends AppCompatActivity {
         Intent startChildActivityIntent = new Intent(context, destinationActivity);
         startChildActivityIntent.putExtra(Intent.EXTRA_TEXT, textEntered);
         startActivity(startChildActivityIntent);
-    }
-
-    public void AddData(String newEntry){
-        boolean insertData = mDatabaseHelper.addData(newEntry);
-        if(insertData){
-            toastMessage("Data Successfully inserted!");
-        }
-        else{
-            toastMessage("Something went wrong");
-        }
-    }
-    public void toastMessage(String message){
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 }
 

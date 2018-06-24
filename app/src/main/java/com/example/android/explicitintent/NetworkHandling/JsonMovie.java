@@ -17,9 +17,9 @@ public class JsonMovie {
 
 
     private static String RESULTS="results";
-public static List<Movie> getListMoviesFromJson(String moviesJsonRawFormat) throws JSONException {
+public static ArrayList<Movie> getListMoviesFromJson(String moviesJsonRawFormat) throws JSONException {
 
-    List<Movie> movies=new ArrayList<>();
+    ArrayList<Movie> movies=new ArrayList<>();
 
     JSONObject jsonObject=new JSONObject(moviesJsonRawFormat);
 

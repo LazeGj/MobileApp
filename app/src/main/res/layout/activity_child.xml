@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ChildActivity">
+    tools:context=".Activities.ChildActivity">
 
 
 
@@ -33,4 +33,5 @@
        android:textSize="20dp"
        android:text="@string/err_message"
        android:visibility="invisible"/>
+   
 </FrameLayout>
